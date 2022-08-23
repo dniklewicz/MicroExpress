@@ -7,7 +7,6 @@
 ![Swift 5](https://img.shields.io/badge/swift-5-blue.svg)
 ![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)
 ![tuxOS](https://img.shields.io/badge/os-tuxOS-green.svg?style=flat)
-![Travis](https://travis-ci.org/NozeIO/MicroExpress.svg?branch=master)
 
 A micro server framework on top of
 [SwiftNIO](https://github.com/apple/swift-nio).
@@ -56,6 +55,9 @@ Express-like API in Swift, have a look at
 (as used in [ApacheExpress](http://apacheexpress.io)).
 [Noze.io](http://noze.io) comes w/ an *asynchronous* variant (but is using
 Dispatch, not SwiftNIO - stay tuned).
+
+**Note:** There is [Macro.swift](https://github.com/Macro-swift), 
+a more capable (and maintained) version of this.
 
 
 ## Using the Package
@@ -164,9 +166,9 @@ Fetching https://github.com/apple/swift-nio.git
 
 **MicroExpress** is brought to you by
 the
-[Always Right Institute](http://www.alwaysrightinstitute.com)
+[Helge Heß](https://helgehess.eu)
 and
-[ZeeZide](http://zeezide.de).
+[ZeeZide](https://zeezide.de).
 We like 
 [feedback](https://twitter.com/ar_institute), 
 GitHub stars, 
