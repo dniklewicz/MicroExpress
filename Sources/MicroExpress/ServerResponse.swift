@@ -156,10 +156,18 @@ public extension ServerResponse {
   
   /// Send a Codable object as JSON to the client.
   func json<T: Encodable>(_ model: T) {
+    let encoder = JSONEncoder()
+    // The default Swift date encoding isn't Javascript
+    // compatible, so pick a more generally accepted
+    // date format.
+    if #available(macOS 10.12, iOS 10.0, *) {
+      encoder.dateEncodingStrategy = .iso8601
+    }
+
     // create a Data struct from the Codable object
     let data : Data
     do {
-      data = try JSONEncoder().encode(model)
+      data = try encoder.encode(model)
     }
     catch {
       return handleError(error)
