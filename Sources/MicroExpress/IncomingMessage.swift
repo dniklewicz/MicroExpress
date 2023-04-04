@@ -4,11 +4,13 @@ import Foundation
 import NIOHTTP1
 
 open class IncomingMessage {
+    public let remoteAddress: String?
     public let header: HTTPRequestHead
     public var userInfo = [ String: Any ]()
     public var body: Data?
 
-    init(header: HTTPRequestHead) {
+    init(remoteAddress: String?, header: HTTPRequestHead) {
+        self.remoteAddress = remoteAddress
         self.header = header
     }
 }

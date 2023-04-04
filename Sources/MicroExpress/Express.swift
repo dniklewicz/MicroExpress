@@ -81,7 +81,7 @@ open class Express: Router {
             
             switch reqPart {
             case .head(let header):
-                incomingMessage = IncomingMessage(header: header)
+                incomingMessage = IncomingMessage(remoteAddress: context.remoteAddress?.ipAddress, header: header)
             case let .body(buffer):
                 guard let request = incomingMessage else { break }
                 let data = buffer.getData(at: buffer.readerIndex, length: buffer.readableBytes)
