@@ -8,7 +8,8 @@ import NIOHTTP1
 let loopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
 
 open class Express: Router {
-
+    weak var serverChannel: Channel?
+    
     override public init() {}
 
     private func createServerBootstrap(_ backlog: Int) -> ServerBootstrap {
@@ -55,15 +56,20 @@ open class Express: Router {
         let bootstrap = self.createServerBootstrap(backlog)
 
         do {
-            let serverChannel =
+            serverChannel =
                 try bootstrap.bind(host: host, port: port)
                 .wait()
-            print("Server running on:", serverChannel.localAddress!)
-
-            try serverChannel.closeFuture.wait() // runs forever
+            if let address = serverChannel?.localAddress {
+                print("Server running on:", address)
+            }
         } catch {
             fatalError("failed to start server: \(error)")
         }
+    }
+    
+    open func close() {
+        _ = serverChannel?.close()
+        serverChannel = nil
     }
 
     final class HTTPHandler: ChannelInboundHandler {
