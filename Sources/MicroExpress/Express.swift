@@ -34,37 +34,33 @@ open class Express: Router {
         return bootstrap
     }
 
-    open func listen(unixSocket: String = "express.socket",
-                     backlog: Int    = 256) {
-        let bootstrap = self.createServerBootstrap(backlog)
-
-        do {
-            let serverChannel =
-                try bootstrap.bind(unixDomainSocketPath: unixSocket)
-                .wait()
-            print("Server running on:", socket)
-
-            try serverChannel.closeFuture.wait() // runs forever
-        } catch {
-            fatalError("failed to start server: \(error)")
-        }
+    open func listen(
+		unixSocket: String = "express.socket",
+		backlog: Int = 256
+	) throws {
+		let bootstrap = self.createServerBootstrap(backlog)
+		
+		let serverChannel =
+		try bootstrap.bind(unixDomainSocketPath: unixSocket)
+			.wait()
+		print("Server running on:", socket)
+		
+		try serverChannel.closeFuture.wait() // runs forever
     }
 
-    open func listen(_ port: Int    = 1337,
-                     _ host: String = "localhost",
-                     _ backlog: Int    = 256) {
+    open func listen(
+		_ port: Int = 1337,
+		_ host: String = "localhost",
+		_ backlog: Int    = 256
+	) throws {
         let bootstrap = self.createServerBootstrap(backlog)
 
-        do {
-            serverChannel =
-                try bootstrap.bind(host: host, port: port)
-                .wait()
-            if let address = serverChannel?.localAddress {
-                print("Server running on:", address)
-            }
-        } catch {
-            fatalError("failed to start server: \(error)")
-        }
+		serverChannel =
+		try bootstrap.bind(host: host, port: port)
+			.wait()
+		if let address = serverChannel?.localAddress {
+			print("Server running on:", address)
+		}
     }
     
     open func close() {
